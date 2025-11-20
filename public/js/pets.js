@@ -191,6 +191,9 @@ if (adoptForm) {
   });
 }
 
+const pagePet = document.body.dataset.pet || "dog";
+const petsGrid = document.getElementById("petsGrid");
+
 document.addEventListener("DOMContentLoaded", () => {
   if (pagePet !== "home") renderCardsFor(pagePet);
 
