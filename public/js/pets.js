@@ -9,10 +9,10 @@ async function getPets(type="dog") {
     try {
         const response = await fetch(url, {
             headers: {
-                "Authorization": `Bearer ${API_Key}`,
+                "Authorization": `Bearer ${API_Key}`, // use backticks!
                 "Content-Type": "application/json"
-            }
-        });
+                }
+            });
 
         if(!response.ok) throw new Error("Failed to fetch pets");
 
