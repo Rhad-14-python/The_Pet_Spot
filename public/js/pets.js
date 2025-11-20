@@ -4,18 +4,25 @@ const pagePet = document.body.dataset.pet || "dog";
 const petsGrid = document.getElementById("petsGrid");
 
 async function getPets(type="dog") {
-    const url = "https://api.rescuegroups.org/v5/public/animals?species=${type}&limit=20";
+    const url = `https://api.rescuegroups.org/v5/public/animals?species=${type}&limit=20`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                "Authorization": 'Bearer ${API_KEY}',
+                "Authorization": `Bearer ${API_Key}`,
                 "Content-Type": "application/json"
             }
         });
-        if(!response.ok)throw new Error("Failed to fetch Pets")
 
-        const data = await response.json();
+        if(!response.ok) throw new Error("Failed to fetch pets");
+
+        let data = [];
+        try {
+            data = await response.json();
+        } catch(err) {
+            console.error("Failed to parse JSON", err);
+            return [];
+        }
 
         const pets = data.data.map((p)=>({
             id: p.id,
@@ -29,11 +36,13 @@ async function getPets(type="dog") {
             description: p.attributes.description || "No description"
         }));
         return pets;
+
     } catch (err) {
         console.error(err);
-        return[];
+        return [];
     }
 }
+
 
 async function renderCardsFor(page) {
     if (!petsGrid) return;
