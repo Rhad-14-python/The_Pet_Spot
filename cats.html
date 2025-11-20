@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dogs — The Pet Spot</title>
+  <link rel="stylesheet" href="css/pets.css"/>
+</head>
+<body data-pet="cat">
+  <header>
+    <div class="logo">🐾 The Pet Spot</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="login.html">Account</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="page-top">
+      <h1 class="page-title">CATS</h1>
+      <div class="type-select">
+        <label>
+           <select id="selectPetType" aria-label="Select pet type">
+              <option value="dogs.html">Dogs</option>
+              <option selected>Cats</option>
+              <option value="birds.html">Birds</option>
+              <option value="smallpets.html">Small Pets</option>
+            </select>
+        </label>
+      </div>
+    </div>
+
+    <section id="petsGrid" class="pets-grid" aria-live="polite">
+    </section>
+
+    <div class="pagination">
+      <button class="page-btn">&lt;</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">&gt;</button>
+    </div>
+  </main>
+
+  <div id="detailModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <button id="detailClose" class="modal-close" aria-label="Close detail">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-left">
+          <img id="detailImg" src="" alt="pet image" />
+        </div>
+        <div class="modal-right">
+          <h2 id="detailName"></h2>
+          <p id="detailBreedAge"></p>
+          <p id="detailDescription"></p>
+          <div class="detail-meta">
+            <p><strong>Gender:</strong> <span id="detailGender"></span></p>
+            <p><strong>Size:</strong> <span id="detailSize"></span></p>
+            <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+          </div>
+
+          <div class="modal-actions">
+            <button id="openAdoptFromDetail" class="primary-btn">Adopt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="adoptOverlay" class="adopt-overlay hidden" aria-hidden="true">
+    <div class="adopt-panel" role="dialog" aria-modal="true">
+      <button id="adoptClose" class="adopt-close" aria-label="Close adoption form">✕</button>
+
+      <div class="adopt-inner">
+        <div class="adopt-left">
+          <img id="adoptImg" src="" alt="pet image">
+          <h3 id="adoptName"></h3>
+          <p id="adoptBreed"></p>
+          <p id="adoptAge"></p>
+        </div>
+
+        <form id="adoptForm" class="adopt-right" novalidate>
+          <h3>Adoption Form</h3>
+
+          <label>Full name
+            <input id="fullName" name="fullName" type="text" required>
+          </label>
+
+          <label>Email
+            <input id="email" name="email" type="email" required>
+          </label>
+
+          <label>Phone
+            <input id="phone" name="phone" type="tel">
+          </label>
+
+          <label>Address
+            <textarea id="address" name="address" rows="2"></textarea>
+          </label>
+
+          <label>Do you own or rent?
+            <select id="ownRent" name="ownRent">
+              <option>Own</option>
+              <option>Rent</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label>Do you have other pets?
+            <select id="otherPets" name="otherPets">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </label>
+
+          <label>Have you owned a pet before?
+            <select id="ownedBefore" name="ownedBefore">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </label>
+
+          <label>Where will the pet spend most of its time?
+            <select id="petLocation" name="petLocation">
+              <option>Indoors</option>
+              <option>Outdoors</option>
+              <option>Both</option>
+            </select>
+          </label>
+
+          <label>Why do you want to adopt this pet?
+            <textarea id="why" name="why" rows="4"></textarea>
+          </label>
+
+          <label class="checkbox-line">
+            <input id="agree" type="checkbox" required> I understand submitting this form does not guarantee adoption.
+          </label>
+
+          <div class="adopt-actions">
+            <button type="submit" class="primary-btn">Submit Application</button>
+            <button type="button" id="cancelAdopt" class="ghost-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pets.js"></script>
+</body>
+</html>
