@@ -69,3 +69,15 @@ async function renderCardsFor(page) {
   petsGrid.classList.remove("fade-out");
   petsGrid.classList.add("fade-in");
 }
+
+const detailModal = document.getElementById("detailModal");
+const detailClose = document.getElementById("detailClose");
+const detailImg = document.getElementById("detailImg");
+const detailName = document.getElementById("detailName");
+const detailBreedAge = document.getElementById("detailBreedAge");
+const detailDescription = document.getElementById("detailDescription");
+const detailGender = document.getElementById("detailGender");
+const detailSize = document.getElementById("detailSize");
+const detailLocation = document.getElementById("detailLocation");
+const openAdoptBtn = document.getElementById("openAdoptFromDetail");
+
