@@ -102,3 +102,50 @@ function openDetail(pet) {
     }
   }, 0);
 }
+
+if (detailClose) detailClose.onclick = () => detailModal.style.display = "none";
+window.addEventListener("click", (ev) => {
+  if (ev.target === detailModal) detailModal.style.display = "none";
+});
+
+// ===== ADOPTION PANEL =====
+const adoptOverlay = document.getElementById("adoptOverlay");
+const adoptPanel = adoptOverlay?.querySelector(".adopt-panel");
+const adoptClose = document.getElementById("adoptClose");
+const cancelAdopt = document.getElementById("cancelAdopt");
+const adoptImg = document.getElementById("adoptImg");
+const adoptName = document.getElementById("adoptName");
+const adoptBreed = document.getElementById("adoptBreed");
+const adoptAge = document.getElementById("adoptAge");
+const adoptForm = document.getElementById("adoptForm");
+
+function openAdopt(pet) {
+  if (!adoptOverlay) return;
+  adoptImg.src = pet.img;
+  adoptName.textContent = pet.name;
+  adoptBreed.textContent = pet.breed;
+  adoptAge.textContent = pet.age;
+
+  try { adoptForm.reset(); } catch (e) {}
+
+  adoptOverlay.classList.remove("hidden");
+  requestAnimationFrame(() => adoptOverlay.classList.add("show"));
+  document.body.style.overflow = "hidden";
+}
+
+function closeAdopt() {
+  if (!adoptOverlay) return;
+  adoptOverlay.classList.remove("show");
+  adoptOverlay.addEventListener("transitionend", function handler() {
+    adoptOverlay.classList.add("hidden");
+    document.body.style.overflow = "";
+    adoptOverlay.removeEventListener("transitionend", handler);
+  });
+}
+
+if (adoptClose) adoptClose.onclick = closeAdopt;
+if (cancelAdopt) cancelAdopt.onclick = closeAdopt;
+
+window.addEventListener("click", (ev) => {
+  if (ev.target === adoptOverlay) closeAdopt();
+});
