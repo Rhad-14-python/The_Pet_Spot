@@ -1,22 +1,22 @@
-const API_Key = "0qz4VD72"
+const API_KEY = "0qz4VD72";
 
-const pagePet = document.body.dataset.pet || "dog";
-const petsGrid = document.getElementById("petsGrid");
-
-async function getPets(type="dog") {
+async function getPets(type = "dog") {
     const url = `https://api.rescuegroups.org/v5/public/animals?species=${type}&limit=20`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                "Authorization": `Bearer ${API_Key}`, // use backticks!
+                "Authorization": `Bearer ${API_KEY}`,
                 "Content-Type": "application/json"
-                }
-            });
+            }
+        });
 
-        if(!response.ok) throw new Error("Failed to fetch pets");
+        if (!response.ok) {
+            console.error("Failed to fetch pets:", response.status, response.statusText);
+            return [];
+        }
 
-        let data = [];
+        let data;
         try {
             data = await response.json();
         } catch(err) {
@@ -24,7 +24,9 @@ async function getPets(type="dog") {
             return [];
         }
 
-        const pets = data.data.map((p)=>({
+        if (!data.data) return [];
+
+        const pets = data.data.map(p => ({
             id: p.id,
             name: p.attributes.name || "Unknown",
             breed: p.attributes.breed || "Unknown",
@@ -35,10 +37,11 @@ async function getPets(type="dog") {
             img: p.attributes.images?.[0]?.url || "https://placehold.co/600x400?text=No+Image",
             description: p.attributes.description || "No description"
         }));
+
         return pets;
 
     } catch (err) {
-        console.error(err);
+        console.error("Error fetching pets:", err);
         return [];
     }
 }
