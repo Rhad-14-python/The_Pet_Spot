@@ -6,7 +6,7 @@ async function getPets(type = "dog") {
     try {
         const response = await fetch(url, {
             headers: {
-                "Authorization": `Bearer ${API_KEY}`,
+                "Authorization": `apikey ${API_KEY}`,
                 "Content-Type": "application/json"
             }
         });
@@ -16,17 +16,11 @@ async function getPets(type = "dog") {
             return [];
         }
 
-        let data;
-        try {
-            data = await response.json();
-        } catch(err) {
-            console.error("Failed to parse JSON", err);
-            return [];
-        }
+        const data = await response.json();
 
         if (!data.data) return [];
 
-        const pets = data.data.map(p => ({
+        return data.data.map(p => ({
             id: p.id,
             name: p.attributes.name || "Unknown",
             breed: p.attributes.breed || "Unknown",
@@ -38,14 +32,11 @@ async function getPets(type = "dog") {
             description: p.attributes.description || "No description"
         }));
 
-        return pets;
-
     } catch (err) {
         console.error("Error fetching pets:", err);
         return [];
     }
 }
-
 
 async function renderCardsFor(page) {
     if (!petsGrid) return;
