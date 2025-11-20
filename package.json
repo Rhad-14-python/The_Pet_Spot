@@ -1,7 +1,8 @@
 {
   "name": "the_pet_spot",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000T\u0000h\u0000e\u0000_\u0000P\u0000e\u0000t\u0000_\u0000S\u0000p\u0000o\u0000t\u0000\r\u0000 \u0000",
+  "type": "module",
+  "description": "The Pet Spot",
   "main": "index.js",
   "scripts": {
     "start": "node server.js"
