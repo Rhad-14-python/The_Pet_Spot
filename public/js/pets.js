@@ -1,5 +1,8 @@
 const API_KEY = "0qz4VD72";
 
+const pagePet = document.body.dataset.pet || "dog";
+const petsGrid = document.getElementById("petsGrid");
+
 async function getPets(type = "dog") {
     try {
         const response = await fetch(`/api/pets/${type}`);
@@ -164,9 +167,6 @@ if (adoptForm) {
     closeAdopt();
   });
 }
-
-const pagePet = document.body.dataset.pet || "dog";
-const petsGrid = document.getElementById("petsGrid");
 
 document.addEventListener("DOMContentLoaded", () => {
   if (pagePet !== "home") renderCardsFor(pagePet);
