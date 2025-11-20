@@ -179,3 +179,18 @@ if (adoptForm) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  if (pagePet !== "home") renderCardsFor(pagePet);
+
+  const sel = document.getElementById("selectPetType");
+  if (sel) {
+    sel.addEventListener("change", async (e) => {
+      const val = e.target.value.toLowerCase();
+      let apiType = "dog";
+      if (val.includes("cat")) apiType = "cat";
+      else if (val.includes("bird")) apiType = "bird";
+      else if (val.includes("small")) apiType = "small";
+      await renderCardsFor(apiType);
+    });
+  }
+});
