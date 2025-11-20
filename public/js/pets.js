@@ -12,11 +12,20 @@ async function getPets(type = "dog") {
         });
 
         if (!response.ok) {
-            console.error("Failed to fetch pets:", response.status, response.statusText);
+            // Response is not ok: maybe 401, 403, etc.
+            const text = await response.text();  // Read as text first
+            console.error("Failed to fetch pets:", response.status, response.statusText, text);
             return [];
         }
 
-        const data = await response.json();
+        // Only parse JSON if response is not empty
+        const text = await response.text();
+        if (!text) {
+            console.warn("API returned empty response");
+            return [];
+        }
+
+        const data = JSON.parse(text);
 
         if (!data.data) return [];
 
@@ -37,6 +46,7 @@ async function getPets(type = "dog") {
         return [];
     }
 }
+
 
 async function renderCardsFor(page) {
     if (!petsGrid) return;
