@@ -1,35 +1,10 @@
 const API_KEY = "0qz4VD72";
 
 async function getPets(type = "dog") {
-    const url = `https://api.rescuegroups.org/v5/public/animals?species=${type}&limit=20`;
-
     try {
-        const response = await fetch(url, {
-            headers: {
-                "Authorization": `apikey ${API_KEY}`,
-                "Content-Type": "application/json"
-            }
-        });
-
-        if (!response.ok) {
-            // Response is not ok: maybe 401, 403, etc.
-            const text = await response.text();  // Read as text first
-            console.error("Failed to fetch pets:", response.status, response.statusText, text);
-            return [];
-        }
-
-        // Only parse JSON if response is not empty
-        const text = await response.text();
-        if (!text) {
-            console.warn("API returned empty response");
-            return [];
-        }
-
-        const data = JSON.parse(text);
-
-        if (!data.data) return [];
-
-        return data.data.map(p => ({
+        const response = await fetch(`/api/pets/${type}`);
+        const data = await response.json();
+        return data.map(p => ({
             id: p.id,
             name: p.attributes.name || "Unknown",
             breed: p.attributes.breed || "Unknown",
@@ -40,13 +15,11 @@ async function getPets(type = "dog") {
             img: p.attributes.images?.[0]?.url || "https://placehold.co/600x400?text=No+Image",
             description: p.attributes.description || "No description"
         }));
-
     } catch (err) {
-        console.error("Error fetching pets:", err);
+        console.error(err);
         return [];
     }
 }
-
 
 async function renderCardsFor(page) {
     if (!petsGrid) return;
