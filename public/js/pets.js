@@ -81,3 +81,24 @@ const detailSize = document.getElementById("detailSize");
 const detailLocation = document.getElementById("detailLocation");
 const openAdoptBtn = document.getElementById("openAdoptFromDetail");
 
+function openDetail(pet) {
+  if (!detailModal) return;
+  detailImg.src = pet.img;
+  detailName.textContent = pet.name;
+  detailBreedAge.textContent = `${pet.breed} • ${pet.age}`;
+  detailDescription.textContent = pet.description || "";
+  detailGender.textContent = pet.gender || "Unknown";
+  detailSize.textContent = pet.size || "Unknown";
+  detailLocation.textContent = pet.location || "";
+  detailModal.style.display = "flex";
+
+  setTimeout(() => {
+    const adb = document.getElementById("openAdoptFromDetail");
+    if (adb) {
+      adb.onclick = () => {
+        detailModal.style.display = "none";
+        openAdopt(pet);
+      };
+    }
+  }, 0);
+}
