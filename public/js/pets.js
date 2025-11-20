@@ -108,7 +108,6 @@ window.addEventListener("click", (ev) => {
   if (ev.target === detailModal) detailModal.style.display = "none";
 });
 
-// ===== ADOPTION PANEL =====
 const adoptOverlay = document.getElementById("adoptOverlay");
 const adoptPanel = adoptOverlay?.querySelector(".adopt-panel");
 const adoptClose = document.getElementById("adoptClose");
@@ -149,3 +148,34 @@ if (cancelAdopt) cancelAdopt.onclick = closeAdopt;
 window.addEventListener("click", (ev) => {
   if (ev.target === adoptOverlay) closeAdopt();
 });
+
+if (adoptForm) {
+  adoptForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const agree = document.getElementById("agree").checked;
+    if (!name || !email || !agree) {
+      alert("Please fill the form and check the box if you agree to the terms.");
+      return;
+    }
+
+    const payload = {
+      pet: adoptName.textContent,
+      fullName: name,
+      email: email,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("address").value,
+      ownRent: document.getElementById("ownRent").value,
+      otherPets: document.getElementById("otherPets").value,
+      ownedBefore: document.getElementById("ownedBefore").value,
+      location: document.getElementById("petLocation").value,
+      why: document.getElementById("why").value
+    };
+    console.log("Adoption application", payload);
+
+    alert("Application submitted. Thanks for submitting we'll contact you soon!");
+    closeAdopt();
+  });
+}
+
