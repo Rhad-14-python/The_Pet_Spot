@@ -30,23 +30,47 @@ const smallSpecies = [
 
 app.get("/api/pets/:type", async (req, res) => {
   const type = req.params.type.toLowerCase();
-  let filters = [];
+  const url = "https://api.rescuegroups.org/v5/public/animals/search/available";
+  let allPets = [];
 
   if (type === "small") {
-    filters = smallSpecies.map(sp => ({
-      fieldName: "species.singular",
-      operation: "equals",
-      criteria: sp
-    }));
-  } else {
-    const species = speciesMap[type] || "Dog";
-    filters = [
-      { fieldName: "species.singular", operation: "equals", criteria: species }
-    ];
+    for (const sp of smallSpecies) {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Authorization": API_KEY,
+            "Content-Type": "application/vnd.api+json"
+          },
+          body: JSON.stringify({
+            data: {
+              filters: [
+                { fieldName: "species.singular", operation: "equals", criteria: sp }
+              ],
+              limit: 10,
+              include: ["breeds", "pictures"]
+            }
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const petsArray = (data.data || []).map(p => ({
+            name: p.attributes.name,
+            breed: p.attributes.breedPrimary || "Unknown",
+            age: p.attributes.ageGroup || "Unknown",
+            img: p.attributes.pictureThumbnailUrl || "/images/default.jpg"
+          }));
+          allPets = allPets.concat(petsArray);
+        }
+      } catch (err) {
+        console.error(`Error fetching ${sp}:`, err);
+      }
+    }
+    return res.json(allPets);
   }
 
-  const url = "https://api.rescuegroups.org/v5/public/animals/search/available";
-
+  const species = speciesMap[type] || "Dog";
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -56,7 +80,9 @@ app.get("/api/pets/:type", async (req, res) => {
       },
       body: JSON.stringify({
         data: {
-          filters,
+          filters: [
+            { fieldName: "species.singular", operation: "equals", criteria: species }
+          ],
           limit: 20,
           include: ["breeds", "pictures"]
         }
