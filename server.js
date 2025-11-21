@@ -41,6 +41,10 @@ function formatPets(data) {
   return (data.data || []).map(p => {
     let img = "/img/default.jpg";
 
+    console.log("Pet:", p.attributes.name);
+    console.log("Picture refs:", p.relationships?.pictures?.data);
+    console.log("Thumbnail in attributes:", p.attributes.pictureThumbnailUrl);
+
     if (
       p.relationships &&
       p.relationships.pictures &&
@@ -49,16 +53,21 @@ function formatPets(data) {
     ) {
       const picRef = p.relationships.pictures.data[0];
       const pic = pictures[picRef.id];
+
       if (pic && (pic.pictureLargeUrl || pic.pictureOriginalUrl || pic.pictureThumbnailUrl)) {
         img =
           pic.pictureLargeUrl ||
           pic.pictureOriginalUrl ||
           pic.pictureThumbnailUrl;
+      } else if (p.attributes.pictureThumbnailUrl) {
+        img = p.attributes.pictureThumbnailUrl;
       } else {
         img = "/img/default.jpg";
       }
     } else if (p.attributes.pictureThumbnailUrl) {
       img = p.attributes.pictureThumbnailUrl;
+    } else {
+      img = "/img/default.jpg";
     }
 
     return {
@@ -145,4 +154,3 @@ app.get("/api/pets/:type", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-
