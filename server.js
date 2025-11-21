@@ -18,10 +18,34 @@ app.get("/api/pets/:type", async (req, res) => {
         "Content-Type": "application/json"
       }
     });
-    const text = await response.text();
-    if (!text) return res.json([]);
-    const data = JSON.parse(text);
-    res.json(data.data || []);
+
+    const raw = await response.json();
+    const items = raw.data || {};
+
+    const formatted = Object.values(items).map(a => {
+      return {
+        id: a.animalID || a.id,
+        attributes: {
+          name: a.animalName || "Unknown",
+          breed: a.animalBreed || "Unknown",
+          age: a.animalAgeString || "Unknown",
+          sex: a.animalSex || "Unknown",
+          size: a.animalSizeCurrent || "Unknown",
+          location: a.animalLocation || "Unknown",
+          description: a.animalDescriptionPlain || "",
+          images: [
+            {
+              url:
+                a.animalThumbnailUrl ||
+                "https://placehold.co/600x400?text=No+Image"
+            }
+          ]
+        }
+      };
+    });
+
+    res.json(formatted);
+
   } catch (err) {
     console.error(err);
     res.json([]);
