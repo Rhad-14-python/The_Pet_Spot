@@ -59,13 +59,27 @@ function formatPets(data) {
           pic.pictureLargeUrl ||
           pic.pictureOriginalUrl ||
           pic.pictureThumbnailUrl;
-      } else if (p.attributes.pictureThumbnailUrl) {
-        img = p.attributes.pictureThumbnailUrl;
+      } else if (
+        p.attributes.pictureLargeUrl ||
+        p.attributes.pictureOriginalUrl ||
+        p.attributes.pictureThumbnailUrl
+      ) {
+        img =
+        p.attributes.pictureLargeUrl ||
+        p.attributes.pictureOriginalUrl ||
+        p.attributes.pictureThumbnailUrl;
       } else {
         img = "/img/default.jpg";
       }
-    } else if (p.attributes.pictureThumbnailUrl) {
-      img = p.attributes.pictureThumbnailUrl;
+    } else if (
+      p.attributes.pictureLargeUrl ||
+      p.attributes.pictureOriginalUrl ||
+      p.attributes.pictureThumbnailUrl
+    ) {
+      img =
+      p.attributes.pictureLargeUrl ||
+      p.attributes.pictureOriginalUrl ||
+      p.attributes.pictureThumbnailUrl;
     } else {
       img = "/img/default.jpg";
     }
