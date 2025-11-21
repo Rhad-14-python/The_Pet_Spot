@@ -1,5 +1,6 @@
 const pagePet = document.body.dataset.pet || "dog";
 const petsGrid = document.getElementById("petsGrid");
+const loadingDiv = document.getElementById("loading");
 
 async function getPets(type = "dog") {
   try {
@@ -13,23 +14,21 @@ async function getPets(type = "dog") {
 }
 
 async function renderCardsFor(page) {
-  if (!petsGrid) return;
+  if (!petsGrid || !loadingDiv) return;
 
-  petsGrid.classList.remove("fade-in");
-  petsGrid.classList.add("fade-out");
-
-  await new Promise(resolve => setTimeout(resolve, 413));
-
-  petsGrid.innerHTML = "<p>Loading pets...</p>";
+  // Show loading, hide grid
+  loadingDiv.style.display = "block";
+  petsGrid.style.display = "none";
 
   const data = await getPets(page);
 
+  // Hide loading, show grid
+  loadingDiv.style.display = "none";
+  petsGrid.style.display = "grid"; // or "block" depending on your CSS
   petsGrid.innerHTML = "";
 
   if (!data.length) {
     petsGrid.innerHTML = "<p>No pets found.</p>";
-    petsGrid.classList.remove("fade-out");
-    petsGrid.classList.add("fade-in");
     return;
   }
 
@@ -49,9 +48,6 @@ async function renderCardsFor(page) {
     card.addEventListener("keydown", (e) => { if (e.key === "Enter") openDetail(p); });
     petsGrid.appendChild(card);
   });
-
-  petsGrid.classList.remove("fade-out");
-  petsGrid.classList.add("fade-in");
 }
 
 document.addEventListener("DOMContentLoaded", () => {

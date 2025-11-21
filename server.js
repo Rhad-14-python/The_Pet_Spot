@@ -65,9 +65,12 @@ function formatPets(data) {
         p.attributes.pictureThumbnailUrl
       ) {
         img =
-        p.attributes.pictureLargeUrl ||
-        p.attributes.pictureOriginalUrl ||
-        p.attributes.pictureThumbnailUrl;
+          p.attributes.pictureLargeUrl ||
+          p.attributes.pictureOriginalUrl ||
+          (p.attributes.pictureThumbnailUrl
+            ? p.attributes.pictureThumbnailUrl.replace(/\?width=\d+/, "?width=600")
+            : null) ||
+          "/img/default.jpg";
       } else {
         img = "/img/default.jpg";
       }
@@ -77,9 +80,12 @@ function formatPets(data) {
       p.attributes.pictureThumbnailUrl
     ) {
       img =
-      p.attributes.pictureLargeUrl ||
-      p.attributes.pictureOriginalUrl ||
-      p.attributes.pictureThumbnailUrl;
+        p.attributes.pictureLargeUrl ||
+        p.attributes.pictureOriginalUrl ||
+        (p.attributes.pictureThumbnailUrl
+          ? p.attributes.pictureThumbnailUrl.replace(/\?width=\d+/, "?width=600")
+          : null) ||
+        "/img/default.jpg";
     } else {
       img = "/img/default.jpg";
     }
