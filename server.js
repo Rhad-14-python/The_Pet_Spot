@@ -28,6 +28,48 @@ const smallSpecies = [
   "Gerbil"
 ];
 
+function formatPets(data) {
+  const pictures = {};
+  if (Array.isArray(data.included)) {
+    data.included.forEach(item => {
+      if (item.type === "pictures" && item.id) {
+        pictures[item.id] = item.attributes;
+      }
+    });
+  }
+
+  return (data.data || []).map(p => {
+    let img = "/img/default.jpg";
+
+    if (
+      p.relationships &&
+      p.relationships.pictures &&
+      Array.isArray(p.relationships.pictures.data) &&
+      p.relationships.pictures.data.length > 0
+    ) {
+      const picRef = p.relationships.pictures.data[0];
+      const pic = pictures[picRef.id];
+      if (pic && (pic.pictureLargeUrl || pic.pictureOriginalUrl || pic.pictureThumbnailUrl)) {
+        img =
+          pic.pictureLargeUrl ||
+          pic.pictureOriginalUrl ||
+          pic.pictureThumbnailUrl;
+      } else {
+        img = "/img/default.jpg";
+      }
+    } else if (p.attributes.pictureThumbnailUrl) {
+      img = p.attributes.pictureThumbnailUrl;
+    }
+
+    return {
+      name: p.attributes.name,
+      breed: p.attributes.breedPrimary || "Unknown",
+      age: p.attributes.ageGroup || "Unknown",
+      img
+    };
+  });
+}
+
 app.get("/api/pets/:type", async (req, res) => {
   const type = req.params.type.toLowerCase();
   const url = "https://api.rescuegroups.org/v5/public/animals/search/available";
@@ -55,13 +97,7 @@ app.get("/api/pets/:type", async (req, res) => {
 
         if (response.ok) {
           const data = await response.json();
-          const petsArray = (data.data || []).map(p => ({
-            name: p.attributes.name,
-            breed: p.attributes.breedPrimary || "Unknown",
-            age: p.attributes.ageGroup || "Unknown",
-            img: p.attributes.pictureThumbnailUrl || "/images/default.jpg"
-          }));
-          allPets = allPets.concat(petsArray);
+          allPets = allPets.concat(formatPets(data));
         }
       } catch (err) {
         console.error(`Error fetching ${sp}:`, err);
@@ -96,12 +132,8 @@ app.get("/api/pets/:type", async (req, res) => {
     }
 
     const data = await response.json();
-    const petsArray = (data.data || []).map(p => ({
-      name: p.attributes.name,
-      breed: p.attributes.breedPrimary || "Unknown",
-      age: p.attributes.ageGroup || "Unknown",
-      img: p.attributes.pictureThumbnailUrl || "/images/default.jpg"
-    }));
+    console.log("API included pictures:", data.included);
+    const petsArray = formatPets(data);
 
     res.json(petsArray);
   } catch (err) {
@@ -113,3 +145,4 @@ app.get("/api/pets/:type", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
