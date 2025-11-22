@@ -41,10 +41,6 @@ function formatPets(data) {
   return (data.data || []).map(p => {
     let img = "/img/default.jpg";
 
-    console.log("Pet:", p.attributes.name);
-    console.log("Picture refs:", p.relationships?.pictures?.data);
-    console.log("Thumbnail in attributes:", p.attributes.pictureThumbnailUrl);
-
     if (
       p.relationships &&
       p.relationships.pictures &&
@@ -53,12 +49,8 @@ function formatPets(data) {
     ) {
       const picRef = p.relationships.pictures.data[0];
       const pic = pictures[picRef.id];
-
       if (pic && (pic.pictureLargeUrl || pic.pictureOriginalUrl || pic.pictureThumbnailUrl)) {
-        img =
-          pic.pictureLargeUrl ||
-          pic.pictureOriginalUrl ||
-          pic.pictureThumbnailUrl;
+        img = pic.pictureLargeUrl || pic.pictureOriginalUrl || pic.pictureThumbnailUrl;
       } else if (
         p.attributes.pictureLargeUrl ||
         p.attributes.pictureOriginalUrl ||
@@ -84,17 +76,18 @@ function formatPets(data) {
         p.attributes.pictureOriginalUrl ||
         (p.attributes.pictureThumbnailUrl
           ? p.attributes.pictureThumbnailUrl.replace(/\?width=\d+/, "?width=600")
-          : null) ||
-        "/img/default.jpg";
-    } else {
-      img = "/img/default.jpg";
+          : null) || "/img/default.jpg";
     }
 
     return {
       name: p.attributes.name,
       breed: p.attributes.breedPrimary || "Unknown",
       age: p.attributes.ageGroup || "Unknown",
-      img
+      img,
+      description: p.attributes.descriptionText || "",
+      gender: p.attributes.sex || "Unknown",
+      size: p.attributes.sizeGroup || "Unknown",
+      location: p.attributes.locationCityState || "Unknown"
     };
   });
 }

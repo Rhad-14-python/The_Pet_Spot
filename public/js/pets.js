@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const detailName = document.getElementById("detailName");
   const detailBreedAge = document.getElementById("detailBreedAge");
   const detailImg = document.getElementById("detailImg");
+  const detailDescription = document.getElementById("detailDescription");
+  const detailGender = document.getElementById("detailGender");
+  const detailSize = document.getElementById("detailSize");
+  const detailLocation = document.getElementById("detailLocation");
+  const toggleBtn = document.getElementById("toggleDescription");
   const openAdoptBtn = document.getElementById("openAdoptFromDetail");
 
   const adoptOverlay = document.getElementById("adoptOverlay");
@@ -18,6 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const adoptImg = document.getElementById("adoptImg");
   const adoptForm = document.getElementById("adoptForm");
   const cancelAdopt = document.getElementById("cancelAdopt");
+
+  function formatDescription(text) {
+    return text.replace(/([.?!])\s+/g, "$1<br><br>");
+  }
 
   async function getPets(type = "dog") {
     try {
@@ -63,7 +72,20 @@ document.addEventListener("DOMContentLoaded", () => {
         detailName.textContent = p.name;
         detailBreedAge.textContent = `${p.breed}, ${p.age}`;
         detailImg.src = p.img;
+        detailDescription.innerHTML = formatDescription(p.description || "No description available.");
+        detailDescription.classList.remove("expanded");
+        toggleBtn.textContent = "Read more";
+        detailGender.textContent = p.gender;
+        detailSize.textContent = p.size;
+        detailLocation.textContent = p.location;
+
         detailModal.classList.add("show");
+        document.body.classList.add("modal-open");
+
+        if (e.target === detailModal) {
+          detailModal.classList.remove("show");
+          document.body.classList.remove("modal-open");
+}
       });
 
       card.addEventListener("keydown", (e) => {
@@ -71,7 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
           detailName.textContent = p.name;
           detailBreedAge.textContent = `${p.breed}, ${p.age}`;
           detailImg.src = p.img;
+          detailDescription.innerHTML = formatDescription(p.description || "No description available.");
+          detailDescription.classList.remove("expanded");
+          toggleBtn.textContent = "Read more";
+          detailGender.textContent = p.gender;
+          detailSize.textContent = p.size;
+          detailLocation.textContent = p.location;
+
           detailModal.classList.add("show");
+          document.body.classList.add("modal-open");
         }
       });
     });
@@ -79,6 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   detailClose.addEventListener("click", () => {
     detailModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
+  });
+
+  detailModal.addEventListener("click", (e) => {
+    if (e.target === detailModal) {
+      detailModal.classList.remove("show");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
+  toggleBtn.addEventListener("click", () => {
+    detailDescription.classList.toggle("expanded");
+    toggleBtn.textContent = detailDescription.classList.contains("expanded") ? "Read less" : "Read more";
   });
 
   openAdoptBtn.addEventListener("click", () => {
