@@ -81,12 +81,13 @@ main p {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color:#edb06e;
 }
 
 .category p {
   margin-top: 0.8rem;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 800;
   color: #333;
 }
 
