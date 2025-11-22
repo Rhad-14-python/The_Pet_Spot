@@ -19,16 +19,6 @@
   <main class="container">
     <div class="page-top">
       <h1 class="page-title">DOGS</h1>
-      <div class="type-select">
-        <label>
-          <select id="selectPetType" aria-label="Select pet type">
-            <option value="dog">Dogs</option>
-            <option value="cat">Cats</option>
-            <option value="bird">Birds</option>
-            <option value="small">Small Pets</option>
-          </select>
-        </label>
-      </div>
     </div>
 <div id="loading" style="display:none;">
   <div class="spinner"></div>
@@ -38,15 +28,6 @@
 
     <section id="petsGrid" class="pets-grid" aria-live="polite">
     </section>
-
-    <div class="pagination">
-      <button class="page-btn">&lt;</button>
-      <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <button class="page-btn">&gt;</button>
-    </div>
-  </main>
 
   <div id="detailModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true">

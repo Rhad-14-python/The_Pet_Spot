@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop — The Pet Spot</title>
+  <link rel="stylesheet" href="C:\Users\TYLER CORTEZ\OneDrive\Documents\Assessment 1(Tomorrow's Web)\publics\css\shop.css">
+</head>
+
+<body>
+<header>
+  <div class="logo">🐾 The Pet Spot</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html" class="active">Shop</a>
+    <a href="login.html">Account</a>
+  </nav>
+</header>
+
+<div class="cart-icon" id="cartIcon">
+  🛒 <span id="cartCount">0</span>
+</div>
+
+<div class="cart-popup" id="cartPopup">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+
+  <div class="cart-total">
+    Total: $<span id="cartTotal">0</span>
+  </div>
+
+  <button id="buyNowBtn">Buy Now</button>
+</div>
+
+
+<main class="container">
+
+  <h1 class="shop-title">Find What's Best For Your Pet!</h1>
+
+  <div class="tabs">
+    <button class="tab active" data-category="foods">Foods</button>
+    <button class="tab" data-category="toys">Toys & Accessories</button>
+    <button class="tab" data-category="beds">Beds & Crates</button>
+    <button class="tab" data-category="collars">Collars & Leashes</button>
+  </div>
+
+  <label class="pet-select">
+    Select Pet:
+    <select id="petType">
+      <option value="all">All</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="bird">Bird</option>
+      <option value="small">Small Pets</option>
+    </select>
+  </label>
+
+  <hr>
+
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="Search products...">
+  </div>
+
+  <section id="shopGrid" class="shop-grid"></section>
+
+</main>
+
+<script src="C:\Users\TYLER CORTEZ\OneDrive\Documents\Assessment 1(Tomorrow's Web)\publics\js\popshop.js"></script>
+<script src="C:\Users\TYLER CORTEZ\OneDrive\Documents\Assessment 1(Tomorrow's Web)\publics\js\shop.js"></script>
+</body>
+</html>
