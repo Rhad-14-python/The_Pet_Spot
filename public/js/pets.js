@@ -59,12 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "pet-card";
       card.tabIndex = 0;
-      card.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p class="pet-breed">${p.breed}</p>
-        <p class="pet-age">${p.age}</p>
+       card.innerHTML = `
+       <img src="${p.img}" alt="${p.name}">
+       <div class="pet-info">
+         <h3>${p.name}</h3>
+         <p class="pet-breed">${p.breed}</p>
+         <p class="pet-age">${p.age}</p>
+       </div>
       `;
+
       petsGrid.appendChild(card);
 
       card.addEventListener("click", () => {
@@ -118,13 +121,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   openAdoptBtn.addEventListener("click", () => {
     adoptName.textContent = detailName.textContent;
-    adoptBreed.textContent = detailBreedAge.textContent;
-    adoptAge.textContent = detailBreedAge.textContent.split(",")[1]?.trim() || "";
+    
+    const [breed, age] = detailBreedAge.textContent.split(",");
+    adoptBreed.textContent = breed.trim();
+    adoptAge.textContent = age ? age.trim() : "";
+
     adoptImg.src = detailImg.src;
     adoptOverlay.classList.add("show");
     document.body.classList.add("modal-open");
   });
-
   adoptClose.addEventListener("click", () => {
     adoptOverlay.classList.remove("show");
     document.body.classList.remove("modal-open");
