@@ -19,12 +19,17 @@ body{
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
 }
 
 .logo {
@@ -65,6 +70,13 @@ nav a:hover, nav a.active {
   100% { transform: rotate(360deg); }
 }
 
+main.container{
+  max-width: 1100px;
+  margin: 26px auto;
+  padding: 0 16px;
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
 .container{max-width:1100px;margin:26px auto;padding:0 16px}
 .page-title{margin:0 0 14px;font-size:28px}
 .lead{margin-bottom:22px;color:var(--muted)}
@@ -244,6 +256,21 @@ nav a:hover, nav a.active {
   display:flex;
   align-items:center;
   gap:8px;
+}
+
+footer {
+  font-family: "Poppins", sans-serif;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #edb06e;
+  text-align: center;
+  padding: 0.1rem;
+  font-size: 0.9rem;
+  color: #777;
+  border-top: 1px solid #eee;
+  z-index: 1000;
 }
 
 button{padding:8px 16px;border:none;border-radius:6px;cursor:pointer}
