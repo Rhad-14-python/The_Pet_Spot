@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       return data || [];
     } catch (err) {
-      console.error("Error fetching pets:", err);
       return [];
     }
   }
@@ -78,14 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         detailGender.textContent = p.gender;
         detailSize.textContent = p.size;
         detailLocation.textContent = p.location;
-
         detailModal.classList.add("show");
         document.body.classList.add("modal-open");
-
-        if (e.target === detailModal) {
-          detailModal.classList.remove("show");
-          document.body.classList.remove("modal-open");
-}
       });
 
       card.addEventListener("keydown", (e) => {
@@ -99,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
           detailGender.textContent = p.gender;
           detailSize.textContent = p.size;
           detailLocation.textContent = p.location;
-
           detailModal.classList.add("show");
           document.body.classList.add("modal-open");
         }
@@ -127,15 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
   openAdoptBtn.addEventListener("click", () => {
     adoptName.textContent = detailName.textContent;
     adoptBreed.textContent = detailBreedAge.textContent;
+    adoptAge.textContent = detailBreedAge.textContent.split(",")[1]?.trim() || "";
     adoptImg.src = detailImg.src;
     adoptOverlay.classList.add("show");
+    document.body.classList.add("modal-open");
   });
 
   adoptClose.addEventListener("click", () => {
     adoptOverlay.classList.remove("show");
+    document.body.classList.remove("modal-open");
   });
+
   cancelAdopt.addEventListener("click", () => {
     adoptOverlay.classList.remove("show");
+    document.body.classList.remove("modal-open");
   });
 
   adoptForm.addEventListener("submit", (e) => {
@@ -155,11 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
       agree: document.getElementById("agree").checked,
     };
 
-    console.log("Adoption request submitted:", formData);
     alert("Your adoption request has been sent!");
-
     adoptForm.reset();
     adoptOverlay.classList.remove("show");
+    document.body.classList.remove("modal-open");
   });
 
   renderCardsFor(pagePet);
