@@ -2,6 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background-color: #fff;
+  background-image: url("/img/background.jpg");
 }
 header {
   background: #fff;
@@ -127,7 +128,7 @@ nav a.active {
   padding: 15px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.45);
 }
 .shop-card img {
   width: 100%;
