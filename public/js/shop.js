@@ -6,7 +6,7 @@ const products = [
         price: 18.99,
         category: "foods",
         pet: "dog",
-        image: "/img/dog-food1.jpg",
+        image: "/img/dog_food1.png",
         description: "High-protein kibble for active dogs."
     },
     {
@@ -15,7 +15,7 @@ const products = [
         price: 22.49,
         category: "foods",
         pet: "dog",
-        image: "/img/dog-food2.jpg",
+        image: "/img/dog_food2.jpg",
         description: "Gentle on sensitive stomachs."
     },
     {
@@ -24,7 +24,7 @@ const products = [
         price: 14.99,
         category: "foods",
         pet: "dog",
-        image: "/img/dog-food3.jpg",
+        image: "/img/dog_food3.png",
         description: "6-pack of nutritious wet meals."
     },
     {
@@ -33,7 +33,7 @@ const products = [
         price: 7.99,
         category: "toys",
         pet: "dog",
-        image: "/img/dog-toy1.jpg",
+        image: "/img/dog_toy4.jpg",
         description: "Durable rope for tug and chew."
     },
     {
@@ -42,7 +42,7 @@ const products = [
         price: 5.49,
         category: "toys",
         pet: "dog",
-        image: "/img/dog-toy2.jpg",
+        image: "/img/dog_toy5.jpg",
         description: "Soft squeaky toy for playful dogs."
     },
     {
@@ -51,7 +51,7 @@ const products = [
         price: 8.99,
         category: "toys",
         pet: "dog",
-        image: "/img/dog-toy3.jpg",
+        image: "/img/dog_toy6.png",
         description: "3-pack of bouncy tennis balls."
     },
     {
@@ -60,7 +60,7 @@ const products = [
         price: 29.99,
         category: "beds",
         pet: "dog",
-        image: "/img/dog-bed1.jpg",
+        image: "/img/dog_bed7.jpg",
         description: "Cozy bed for medium dogs."
     },
     {
@@ -69,7 +69,7 @@ const products = [
         price: 49.99,
         category: "beds",
         pet: "dog",
-        image: "/img/dog-bed2.jpg",
+        image: "/img/dog_bed8.jpg",
         description: "Memory foam bed for older dogs."
     },
     {
@@ -78,7 +78,7 @@ const products = [
         price: 19.99,
         category: "beds",
         pet: "dog",
-        image: "/img/dog-bed3.jpg",
+        image: "/img/dog_bed9.jpg",
         description: "Soft mat for crates and carriers."
     },
     {
@@ -87,7 +87,7 @@ const products = [
         price: 12.99,
         category: "collars",
         pet: "dog",
-        image: "/img/dog-leash1.jpg",
+        image: "/img/dog_leash10.jpg",
         description: "Strong nylon leash for daily walks."
     },
     {
@@ -96,7 +96,7 @@ const products = [
         price: 9.99,
         category: "collars",
         pet: "dog",
-        image: "/img/dog-collar1.jpg",
+        image: "/img/dog_collar11.jpg",
         description: "Reflective collar for night safety."
     },
     {
@@ -105,7 +105,7 @@ const products = [
         price: 17.99,
         category: "collars",
         pet: "dog",
-        image: "/img/dog-harness1.jpg",
+        image: "/img/dog_harness12.jpg",
         description: "Comfortable harness for long walks."
     },
     //Cats
