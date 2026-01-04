@@ -126,7 +126,7 @@ h1{
   transition:.15s;
 }
 .pet-card:hover{
-  transform:translateY(-6px)
+  transform:translateY(-7px)
 }
 .pet-card img{
   width:100%;height:150px;

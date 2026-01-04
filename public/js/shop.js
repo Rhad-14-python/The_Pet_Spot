@@ -196,7 +196,7 @@ const products = [
         price: 7.99,
         category: "collars",
         pet: "cat",
-        image: "/img/cat_collar21.jpg",
+        image: "/img/cat_collar22.jpg",
         description: "Adjustable collar with safety bell."
     },
     {
@@ -205,7 +205,7 @@ const products = [
         price: 8.49,
         category: "collars",
         pet: "cat",
-        image: "/img/cat_collar22.jpg",
+        image: "/img/cat_collar23.jpg",
         description: "Breakaway design for safety."
     },
     {
@@ -214,7 +214,7 @@ const products = [
         price: 9.49,
         category: "collars",
         pet: "cat",
-        image: "/img/cat_collar23.jpg",
+        image: "/img/cat_collar24.jpg",
         description: "Reflective strip for night visibility."
     },
     //Birds
@@ -224,7 +224,7 @@ const products = [
         price: 6.99,
         category: "foods",
         pet: "bird",
-        image: "/img/bird-food1.jpg",
+        image: "/img/bird_food25.jpg",
         description: "Healthy seed mix for small birds."
     },
     {
@@ -233,16 +233,16 @@ const products = [
         price: 11.99,
         category: "foods",
         pet: "bird",
-        image: "/img/bird-food2.jpg",
+        image: "/img/bird_food26.jpg",
         description: "Balanced pellets for parrots."
     },
     {
         id: 27,
-        name: "Vitamin‑Enriched Bird Food",
+        name: "Vitamin-Enriched Bird Food",
         price: 9.49,
         category: "foods",
         pet: "bird",
-        image: "/img/bird-food3.jpg",
+        image: "/img/bird_food27.jpg",
         description: "Boosts immunity and feather health."
     },
     {
@@ -251,7 +251,7 @@ const products = [
         price: 5.99,
         category: "toys",
         pet: "bird",
-        image: "/img/bird-toy1.jpg",
+        image: "/img/bird_toy28.jpg",
         description: "Fun swing for cage enrichment."
     },
     {
@@ -260,7 +260,7 @@ const products = [
         price: 4.49,
         category: "toys",
         pet: "bird",
-        image: "/img/bird-toy2.jpg",
+        image: "/img/bird_toy29.jpg",
         description: "Mirror toy to keep birds entertained."
     },
     {
@@ -269,7 +269,7 @@ const products = [
         price: 6.49,
         category: "toys",
         pet: "bird",
-        image: "/img/bird-toy3.jpg",
+        image: "/img/bird_toy30.jpg",
         description: "Climbing ladder for active birds."
     },
     {
@@ -278,7 +278,7 @@ const products = [
         price: 12.99,
         category: "beds",
         pet: "bird",
-        image: "/img/bird-bed1.jpg",
+        image: "/img/bird_bed31.jpg",
         description: "Safe nesting box for small birds."
     },
     {
@@ -287,7 +287,7 @@ const products = [
         price: 14.99,
         category: "beds",
         pet: "bird",
-        image: "/img/bird-bed2.jpg",
+        image: "/img/bird_bed32.jpg",
         description: "Soft hut for cozy resting."
     },
     {
@@ -296,7 +296,7 @@ const products = [
         price: 9.99,
         category: "beds",
         pet: "bird",
-        image: "/img/bird-bed3.jpg",
+        image: "/img/bird_bed33.jpg",
         description: "Comfortable perch with padding."
     },
     {
@@ -305,7 +305,7 @@ const products = [
         price: 15.99,
         category: "collars",
         pet: "bird",
-        image: "/img/bird-harness1.jpg",
+        image: "/img/bird_harness34.jpg",
         description: "Safe harness for outdoor training."
     },
     {
@@ -314,7 +314,7 @@ const products = [
         price: 13.49,
         category: "collars",
         pet: "bird",
-        image: "/img/bird-harness2.jpg",
+        image: "/img/bird_harness35.jpg",
         description: "Lightweight harness for tiny birds."
     },
     {
@@ -323,7 +323,7 @@ const products = [
         price: 18.99,
         category: "collars",
         pet: "bird",
-        image: "/img/bird-harness3.jpg",
+        image: "/img/bird_harness36.jpg",
         description: "Strong harness for parrots."
     },
     //small pets
@@ -333,7 +333,7 @@ const products = [
         price: 5.99,
         category: "foods",
         pet: "small",
-        image: "/img/small-food1.jpg",
+        image: "/img/small_food37.jpg",
         description: "Balanced mix for hamsters."
     },
     {
@@ -342,8 +342,8 @@ const products = [
         price: 7.49,
         category: "foods",
         pet: "small",
-        image: "/img/small-food2.jpg",
-        description: "Vitamin‑rich pellets for guinea pigs."
+        image: "/img/small_food38.jpg",
+        description: "Vitamin-rich pellets for guinea pigs."
     },
     {
         id: 39,
@@ -351,7 +351,7 @@ const products = [
         price: 8.99,
         category: "foods",
         pet: "small",
-        image: "/img/small-food3.jpg",
+        image: "/img/small_food39.jpg",
         description: "Healthy blend for rabbits."
     },
     {
@@ -360,7 +360,7 @@ const products = [
         price: 6.49,
         category: "toys",
         pet: "small",
-        image: "/img/small-toy1.jpg",
+        image: "/img/small_toy40.jpg",
         description: "Safe chew toys for small pets."
     },
     {
@@ -369,7 +369,7 @@ const products = [
         price: 12.99,
         category: "toys",
         pet: "small",
-        image: "/img/small-toy2.jpg",
+        image: "/img/small_toy41.jpg",
         description: "Quiet wheel for hamsters."
     },
     {
@@ -378,7 +378,7 @@ const products = [
         price: 9.49,
         category: "toys",
         pet: "small",
-        image: "/img/small-toy3.jpg",
+        image: "/img/small_toy42.jpg",
         description: "Fun tunnel for hiding and playing."
     },
     {
@@ -387,7 +387,7 @@ const products = [
         price: 14.99,
         category: "beds",
         pet: "small",
-        image: "/img/small-bed1.jpg",
+        image: "/img/small_bed43.jpg",
         description: "Cozy hideout for small pets."
     },
     {
@@ -396,7 +396,7 @@ const products = [
         price: 11.99,
         category: "beds",
         pet: "small",
-        image: "/img/small-bed2.jpg",
+        image: "/img/small_bed44.jpg",
         description: "Soft mat for cages."
     },
     {
@@ -405,7 +405,7 @@ const products = [
         price: 8.49,
         category: "beds",
         pet: "small",
-        image: "/img/small-bed3.jpg",
+        image: "/img/small_bed45.jpg",
         description: "Warm nest for hamsters."
     },
     {
@@ -414,7 +414,7 @@ const products = [
         price: 9.99,
         category: "collars",
         pet: "small",
-        image: "/img/small-harness1.jpg",
+        image: "/img/small_harness46.jpg",
         description: "Harness for rabbits and guinea pigs."
     },
     {
@@ -423,7 +423,7 @@ const products = [
         price: 7.49,
         category: "collars",
         pet: "small",
-        image: "/img/small-harness2.jpg",
+        image: "/img/small_harness47.jpg",
         description: "Small leash for tiny pets."
     },
     {
@@ -432,7 +432,7 @@ const products = [
         price: 6.99,
         category: "collars",
         pet: "small",
-        image: "/img/small-harness3.jpg",
+        image: "/img/small_harness48.jpg",
         description: "Adjustable collar for small animals."
     },
 ];
@@ -446,17 +446,19 @@ function displayProducts(list) {
         card.classList.add("shop-card");
 
         card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>$${product.price.toFixed(2)}</p>
-      <p class="description">${product.description}</p>
-      <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-    `;
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>$${product.price.toFixed(2)}</p>
+            <p class="description">${product.description}</p>
+            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+        `;
 
         grid.appendChild(card);
     });
 }
+
 displayProducts(products);
+
 const tabs = document.querySelectorAll(".tab");
 
 tabs.forEach(tab => {
@@ -466,14 +468,17 @@ tabs.forEach(tab => {
 
         const category = tab.dataset.category;
 
-        if (category === "foods" || category === "toys" || category === "beds" || category === "collars") {
+        if (["foods", "toys", "beds", "collars"].includes(category)) {
             const filtered = products.filter(p => p.category === category);
             displayProducts(filtered);
+            toggleNoResults(filtered);
         } else {
             displayProducts(products);
+            toggleNoResults(products);
         }
     });
 });
+
 const petSelect = document.getElementById("petType");
 
 petSelect.addEventListener("change", () => {
@@ -481,11 +486,14 @@ petSelect.addEventListener("change", () => {
 
     if (type === "all") {
         displayProducts(products);
+        toggleNoResults(products);
     } else {
         const filtered = products.filter(p => p.pet === type);
         displayProducts(filtered);
+        toggleNoResults(filtered);
     }
 });
+
 const searchInput = document.getElementById("searchInput");
 
 searchInput.addEventListener("input", () => {
@@ -497,7 +505,9 @@ searchInput.addEventListener("input", () => {
     );
 
     displayProducts(filtered);
+    toggleNoResults(filtered);
 });
+
 let cart = [];
 
 document.addEventListener("click", (e) => {
@@ -512,4 +522,15 @@ document.addEventListener("click", (e) => {
 
 function updateCartCount() {
     document.querySelector(".cart-count").textContent = cart.length;
+}
+
+
+const noResultShow = document.getElementById("noResultShow");
+
+function toggleNoResults(list) {
+    if (list.length === 0) {
+        noResultShow.style.display = "block";
+    } else {
+        noResultShow.style.display = "none";
+    }
 }
