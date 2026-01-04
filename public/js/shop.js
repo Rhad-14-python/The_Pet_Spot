@@ -115,7 +115,7 @@ const products = [
         price: 12.99,
         category: "foods",
         pet: "cat",
-        image: "/img/cat-food1.jpg",
+        image: "/img/cat_food13.png",
         description: "Rich salmon flavor cats love."
     },
     {
@@ -124,7 +124,7 @@ const products = [
         price: 15.49,
         category: "foods",
         pet: "cat",
-        image: "/img/cat-food2.jpg",
+        image: "/img/cat_food14.jpg",
         description: "Balanced nutrition for indoor cats."
     },
     {
@@ -133,7 +133,7 @@ const products = [
         price: 13.99,
         category: "foods",
         pet: "cat",
-        image: "/img/cat-food3.jpg",
+        image: "/img/cat_food15.jpg",
         description: "Mixed flavors for picky eaters."
     },
     {
@@ -142,7 +142,7 @@ const products = [
         price: 6.49,
         category: "toys",
         pet: "cat",
-        image: "/img/cat-toy1.jpg",
+        image: "/img/cat_toy16.jpg",
         description: "Interactive wand for playtime."
     },
     {
@@ -151,7 +151,7 @@ const products = [
         price: 4.99,
         category: "toys",
         pet: "cat",
-        image: "/img/cat-toy2.jpg",
+        image: "/img/cat_toy17.jpg",
         description: "Soft mouse filled with catnip."
     },
     {
@@ -160,7 +160,7 @@ const products = [
         price: 9.99,
         category: "toys",
         pet: "cat",
-        image: "/img/cat-toy3.jpg",
+        image: "/img/cat_toy18.jpg",
         description: "Keeps cats entertained for hours."
     },
     {
@@ -169,7 +169,7 @@ const products = [
         price: 22.99,
         category: "beds",
         pet: "cat",
-        image: "/img/cat-bed1.jpg",
+        image: "/img/cat_bed19.jpg",
         description: "Soft round bed for cozy naps."
     },
     {
@@ -178,7 +178,7 @@ const products = [
         price: 27.99,
         category: "beds",
         pet: "cat",
-        image: "/img/cat-bed2.jpg",
+        image: "/img/cat_bed20.jpg",
         description: "Enclosed cave for shy cats."
     },
     {
@@ -187,8 +187,8 @@ const products = [
         price: 19.99,
         category: "beds",
         pet: "cat",
-        image: "/img/cat-bed3.jpg",
-        description: "Suction‑cup hammock for window lounging."
+        image: "/img/cat_bed21.jpg",
+        description: "Suction-cup hammock for window lounging."
     },
     {
         id: 22,
@@ -196,7 +196,7 @@ const products = [
         price: 7.99,
         category: "collars",
         pet: "cat",
-        image: "/img/cat-collar1.jpg",
+        image: "/img/cat_collar21.jpg",
         description: "Adjustable collar with safety bell."
     },
     {
@@ -205,7 +205,7 @@ const products = [
         price: 8.49,
         category: "collars",
         pet: "cat",
-        image: "/img/cat-collar2.jpg",
+        image: "/img/cat_collar22.jpg",
         description: "Breakaway design for safety."
     },
     {
@@ -214,7 +214,7 @@ const products = [
         price: 9.49,
         category: "collars",
         pet: "cat",
-        image: "/img/cat-collar3.jpg",
+        image: "/img/cat_collar23.jpg",
         description: "Reflective strip for night visibility."
     },
     //Birds
