@@ -1,0 +1,145 @@
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+}
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 360px;
+  height: 100%;
+  background: #fff8e6;
+  padding: 28px;
+  box-shadow: -3px 0 12px rgba(0,0,0,0.25);
+  transition: right 0.35s ease;
+  z-index: 10000;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-panel.open {
+  right: 0;
+}
+
+.close-btn {
+  background: none;
+  color: #e67e22;
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #cf6f1d;
+}
+
+.side-panel h2 {
+  margin-top: 10px;
+  margin-bottom: 18px;
+  font-size: 1.6rem;
+  color: #d35400;
+  font-weight: 700;
+}
+
+.side-panel input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #e0c9a6;
+  background: #fffdf3;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.side-panel input:focus {
+  outline: none;
+  border-color: #e67e22;
+  box-shadow: 0 0 6px rgba(230, 126, 34, 0.45);
+}
+
+.side-panel button {
+  width: 100%;
+  padding: 12px;
+  background: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.25s, transform 0.1s;
+}
+
+.side-panel button:hover {
+  background: #cf6f1d;
+}
+
+.side-panel button:active {
+  transform: scale(0.97);
+}
+
+.side-panel a {
+  color: #d35400;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.side-panel a:hover {
+  text-decoration: underline;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background: white;
+  border: 2px solid #e0c9a6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 15px;
+
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.google-btn:hover {
+  background: #fff3d6;
+  border-color: #e67e22;
+}
+
+.google-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+.google-btn span {
+  font-size: 1rem;
+  color: #444;
+  font-weight: 600;
+}
+
+#user-section p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #d35400;
+  margin-bottom: 10px;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .side-panel {
+    width: 300px;
+  }
+}

@@ -2,56 +2,192 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="with=device-width, initial-scale=1"/>
-    <title>Shop — The Pet Spot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Shop | The Pet Spot</title>
+    <!--This one styles the shop page-->
     <link rel="stylesheet" href="css/shop.css"/>
+    <!--This one styles the cart panel-->
+    <link rel="stylesheet" href="css/cart.css">
+    <!--A styling for the login and signup panels-->
+    <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
+
+    <!--A Navigation and Header that shows the lodo and all the link to the main sections-->
     <header>
       <div class="logo">🐾 The Pet Spot</div>
       <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="login.html">Account</a>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Shop</a>
+        <!--Shows all the panel when clicked-->
+        <a href="#" class="nav-link" onclick="handleAccountClick()">Account</a>
       </nav>
     </header>
+
+    <!--A floating cart button the presents the number of items-->
     <button class="cart-popup" aria-label="Cart">🛒 <span class="cart-count">0</span></button>
-    
+
+    <!--The main content area that displays all the shop products-->
     <main class="container">
-    <h1 class="shop-title">FIND WHAT'S BEST FOR YOUR PET!</h1>
+      <h1 class="shop-title">FIND WHAT'S BEST FOR YOUR PET!</h1>
 
-    <div class="tabs">
-      <button class="tab active" data-category="foods">FOODS</button>
-      <button class="tab" data-category="toys">TOYS & ACCESSORIES</button>
-      <button class="tab" data-category="beds">BEDS & CRATES</button>
-      <button class="tab" data-category="collars">COLLARS & LEASHES</button>
-    </div>
+      <!--Tabs that help filters the prodocts depends on what pet animal it is-->
+      <div class="tabs">
+        <button class="tab active" data-category="foods">FOODS</button>
+        <button class="tab" data-category="toys">TOYS & ACCESSORIES</button>
+        <button class="tab" data-category="beds">BEDS & CRATES</button>
+        <button class="tab" data-category="collars">COLLARS & LEASHES</button>
+      </div>
 
-    <label class="pet-select">
-      Select Pet:
-      <select id="petType">
-        <option value="all">All</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="bird">Bird</option>
-        <option value="small">Small Pets</option>
-      </select>
-    </label>
+      <!--Filters the products with a dropdown by the pet type-->
+      <label class="pet-select">
+        Select Pet:
+        <select id="petType">
+          <option value="all">All</option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="bird">Bird</option>
+          <option value="small">Small Pets</option>
+        </select>
+      </label>
 
-    <div class="search-wrapper">
-      <input type="text" id="searchInput" placeholder="Search products...">
-    </div>
+      <!--A Search bar for filtering products by name-->
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
 
+      <!--Dynamic grid where shop products are inserted-->
       <section id="shopGrid" class="shop-grid"></section>
 
+      <!--Shows when no products match the search-->
       <p id="noResultShow">No products that match your search.</p>
+    </main>
 
-  </main>
+    <!--Display the slogan in the  FOOTER SECTION-->
+    <footer class="site-footer">
+      <p>© 2025 The Pet Spot | Adopt, Don't Shop!</p>
+    </footer>
 
-  <footer class="site-footer">
-    <p>© 2025 The Pet Spot | Adopt, Don't Shop!</p>
-  </footer>
+    <!--The cart panel that slides in when the user opens the cart-->
+    <div id="cartPanelbox" class="cart-panelbox">
 
-  <script src="js/shop.js"></script>
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <!--Closes the cart panel-->
+        <button id="closeCart" class="close-cart">&times</button>
+      </div>
+
+      <!--Where all cart items are displayed-->
+      <div id="cartItems" class="cart-items"></div>
+
+      <div class="cart-footer">
+        <p>Total: AED<span id="cartTotal">0.00</span></p>
+        <button class="checkout-btn">Checkout</button>
+
+        <!--A payment form shows when clicking the checkout-->
+        <div id="paymentForm" class="payment-form" style="display: none;">
+          <h3>Payment Details</h3>
+
+          <label>
+            Name on Card
+            <input type="text" id="cardName" placeholder="Card Name">
+          </label>
+
+          <label>
+            Card Number
+            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000">
+          </label>
+
+          <div class="payment-row">
+            <label>
+              Expiry
+              <input type="text" id="cardExpiry" placeholder="MM/YY">
+            </label>
+
+            <label>
+              CVV
+              <input type="password" id="cardCVV" placeholder="***">
+            </label>
+          </div>
+
+          <button id="confirmPaymentBtn" class="confirm-payment-btn">
+            Confirm Payment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--The Overlay behind the cart panel-->
+    <div id="cartOverlay" class="cart-icon"></div>
+
+    <!--an Overlay and panel that is being used across all pages-->
+    <div id="loginOverlay" class="overlay" style="display: none;"></div>
+
+    <div id="loginPanel" class="side-panel" style="display: none;">
+      <button class="close-btn" onclick="closeLogin()">&larr;</button>
+
+      <h2>Welcome Back</h2>
+
+      <!--Basic Login form-->
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <p id="loginMessage"></p>
+
+      <!--The Google OAuth login-->
+      <div id="login-section" style="margin-top: 20px; text-align: center;">
+        <p>or</p>
+        <a href="/auth/google" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+        <span>Continue with Google</span>
+      </a>
+      </div>
+
+      <!--If logged in user section-->
+      <div id="user-section" style="display: none; margin-top: 20px; text-align: center;">
+        <p>Welcome, <span id="account-name"></span>!</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <!--Link to signup panel-->
+      <p id="signupPrompt" style="margin-top: 10px;">
+        Don't have an account?
+        <a href="#" onclick="closeLogin(); openSignup();">Sign up</a>
+      </p>
+    </div>
+
+    <!--A signup panel that let new users to make an account-->
+    <div id="signupOverlay" class="overlay" style="display: none;"></div>
+
+    <div id="signupPanel" class="side-panel" style="display: none;">
+      <button class="close-btn" onclick="closeSignup()">&larr;</button>
+
+      <h2>Create an Account</h2>
+
+      <!--Signup Form-->
+      <form id="signupForm">
+        <input type="text" id="signupName" placeholder="Full Name" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <p id="signupMessage"></p>
+
+      <!--A link that goes back to Login-->
+      <p style="margin-top: 10px;">
+        Already have an account?
+        <a href="#" onclick="closeSignup(); openLogin();">Log in</a>
+      </p>
+    </div>
+
+    <!--JavaScript that are controlling the shop products, cart system, and login system-->
+    <script src="js/shop.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/login.js"></script>
+
   </body>
 </html>

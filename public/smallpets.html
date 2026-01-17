@@ -4,140 +4,249 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SmallPets | The Pet Spot</title>
+  <!--This one style the pet tab-->
   <link rel="stylesheet" href="css/pets.css"/>
+  <!--A styling for the login and signup panels-->
+  <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body data-pet="small">
+  <!--Navigation and Header that display the site logo and the links to main sections-->
   <header>
     <div class="logo">🐾 The Pet Spot</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="shop.html">Shop</a>
-      <a href="login.html">Account</a>
+      <!--Shows a panel login when clicked-->
+      <a href="#" class="nav-link" onclick="handleAccountClick()">Account</a>
     </nav>
   </header>
 
+  <!--The main content area that display all the small pets and handles adoption interactions-->
   <main class="container">
+    <!--The title section-->
     <div class="page-top">
       <h1 class="page-title">SMALL PETS</h1>
     </div>
-<div id="loading" style="display:none;">
-  <div class="spinner"></div>
-  <p>Loading pets...</p>
-</div>
 
-    <section id="petsGrid" class="pets-grid" aria-live="polite">
-    </section>
+    <!--A loading indicator shown while fetching pets-->
+    <div id="loading" style="display:none;">
+      <div class="spinner"></div>
+      <p>Loading pets...</p>
+    </div>
 
-  <div id="detailModal" class="modal-overlay" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <div class="modal-header">
-        <button id="detailClose" class="modal-close" aria-label="Close detail">✕</button>
-      </div>
+    <!-- Dynamic grid where small pet cards are inserted -->
+    <section id="petsGrid" class="pets-grid" aria-live="polite"></section>
 
-      <div class="modal-body">
-        <div class="modal-left">
-          <img id="detailImg" src="" alt="pet image" />
+    <!--Pet detail modal that displays full information about a chosen small pet-->
+    <div id="detailModal" class="modal-overlay" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true">
+
+        <!--Closes the detail modal when clicked-->
+        <div class="modal-header">
+          <button id="detailClose" class="modal-close" aria-label="Close detail">✕</button>
         </div>
-        <div class="modal-right">
-          <h2 id="detailName"></h2>
-          <p id="detailBreedAge"></p>
-          <div id="detailDescription" class="description-text"></div>
-          <button id="toggleDescription" class="ghost-btn">Read more</button>
-          <div class="detail-meta">
-            <p><strong>Gender:</strong> <span id="detailGender"></span></p>
-            <p><strong>Size:</strong> <span id="detailSize"></span></p>
-            <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+
+        <div class="modal-body">
+          <div class="modal-left">
+            <!--The pet's image-->
+            <img id="detailImg" src="" alt="pet image" />
           </div>
 
-          <div class="modal-actions">
-            <button id="openAdoptFromDetail" class="primary-btn">Adopt</button>
+          <!--The pet's information-->
+          <div class="modal-right">
+            <h2 id="detailName"></h2>
+            <p id="detailBreedAge"></p>
+
+            <!--Expands description text-->
+            <div id="detailDescription" class="description-text"></div>
+            <button id="toggleDescription" class="ghost-btn">Read more</button>
+
+            <!--More pet description-->
+            <div class="detail-meta">
+              <p><strong>Gender:</strong> <span id="detailGender"></span></p>
+              <p><strong>Size:</strong> <span id="detailSize"></span></p>
+              <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+            </div>
+
+            <!--Button to open adoption form-->
+            <div class="modal-actions">
+              <button id="openAdoptFromDetail" class="primary-btn">Adopt</button>
+            </div>
           </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Adoption form panel that allows users to send an adoption application-->
+    <div id="adoptOverlay" class="adopt-overlay" aria-hidden="true">
+      <div class="adopt-panel" role="dialog" aria-modal="true">
+
+        <!--Closes the adoption form-->
+        <button id="adoptClose" class="adopt-close" aria-label="Close adoption form">✕</button>
+
+        <div class="adopt-inner">
+
+          <!--Left side:selected pet summary-->
+          <div class="adopt-left">
+            <img id="adoptImg" src="" alt="pet image">
+            <h3 id="adoptName"></h3>
+            <p id="adoptBreed"></p>
+            <p id="adoptAge"></p>
+          </div>
+
+          <!--Right side the adoption form-->
+          <form id="adoptForm" class="adopt-right" novalidate>
+            <h3>Adoption Form</h3>
+
+            <!--Basic adoption questionnaire-->
+            <label>Full name
+              <input id="fullName" name="fullName" type="text" required>
+            </label>
+
+            <label>Email
+              <input id="adoptEmail" name="email" type="email" required>
+            </label>
+
+            <label>Phone
+              <input id="phone" name="phone" type="tel" required>
+            </label>
+
+            <label>Address
+              <textarea id="address" name="address" rows="2" required></textarea>
+            </label>
+
+            <!--Background questionnaire-->
+            <label>Do you own or rent?
+              <select id="ownRent" name="ownRent" required>
+                <option value="">Select...</option>
+                <option>Own</option>
+                <option>Rent</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label>Do you have other pets?
+              <select id="otherPets" name="otherPets" required>
+                <option value="">Select...</option>
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </label>
+
+            <label>Have you owned a pet before?
+              <select id="ownedBefore" name="ownedBefore" required>
+                <option value="">Select...</option>
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </label>
+
+            <label>Where will the pet spend most of its time?
+              <select id="petLocation" name="petLocation" required>
+                <option value="">Select...</option>
+                <option>Indoors</option>
+                <option>Outdoors</option>
+                <option>Both</option>
+              </select>
+            </label>
+
+            <label>Why do you want to adopt this pet?
+              <textarea id="why" name="why" rows="4" required></textarea>
+            </label>
+
+            <!--A checkbox confirmation-->
+            <div class="checkbox-line">
+              <input id="agree" type="checkbox" required>
+              <label for="agree">I understand submitting this form does not guarantee adoption.</label>
+            </div>
+
+            <!--Form actions-->
+            <div class="adopt-actions">
+              <button type="submit" class="primary-btn">Submit Application</button>
+              <button type="button" id="cancelAdopt" class="ghost-btn">Cancel</button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="adoptOverlay" class="adopt-overlay" aria-hidden="true">
-    <div class="adopt-panel" role="dialog" aria-modal="true">
-      <button id="adoptClose" class="adopt-close" aria-label="Close adoption form">✕</button>
+  </main>
 
-      <div class="adopt-inner">
-        <div class="adopt-left">
-          <img id="adoptImg" src="" alt="pet image">
-          <h3 id="adoptName"></h3>
-          <p id="adoptBreed"></p>
-          <p id="adoptAge"></p>
-        </div>
-
-        <form id="adoptForm" class="adopt-right" novalidate>
-          <h3>Adoption Form</h3>
-
-          <label>Full name
-            <input id="fullName" name="fullName" type="text" required>
-          </label>
-
-          <label>Email
-            <input id="email" name="email" type="email" required>
-          </label>
-
-          <label>Phone
-            <input id="phone" name="phone" type="tel">
-          </label>
-
-          <label>Address
-            <textarea id="address" name="address" rows="2"></textarea>
-          </label>
-
-          <label>Do you own or rent?
-            <select id="ownRent" name="ownRent">
-              <option>Own</option>
-              <option>Rent</option>
-              <option>Other</option>
-            </select>
-          </label>
-
-          <label>Do you have other pets?
-            <select id="otherPets" name="otherPets">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </label>
-
-          <label>Have you owned a pet before?
-            <select id="ownedBefore" name="ownedBefore">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </label>
-
-          <label>Where will the pet spend most of its time?
-            <select id="petLocation" name="petLocation">
-              <option>Indoors</option>
-              <option>Outdoors</option>
-              <option>Both</option>
-            </select>
-          </label>
-
-          <label>Why do you want to adopt this pet?
-            <textarea id="why" name="why" rows="4"></textarea>
-          </label>
-
-          <label class="checkbox-line">
-            <input id="agree" type="checkbox" required> I understand submitting this form does not guarantee adoption.
-          </label>
-
-          <div class="adopt-actions">
-            <button type="submit" class="primary-btn">Submit Application</button>
-            <button type="button" id="cancelAdopt" class="ghost-btn">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/pets.js"></script>
-   <footer class="site-footer">
+  <!--Display the slogan FOOTER SECTION-->
+  <footer class="site-footer">
     <p>© 2025 The Pet Spot | Adopt, Don't Shop!</p>
   </footer>
+
+  <!--The login panel and overlay that shared login component used across all pages-->
+  <div id="loginOverlay" class="overlay"></div>
+
+  <div id="loginPanel" class="side-panel">
+    <button class="close-btn" onclick="closeLogin()">&larr;</button>
+
+    <h2>Welcome Back</h2>
+
+    <!--Basic Login form-->
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+
+    <p id="loginMessage"></p>
+
+    <!--The Google OAuth login-->
+    <div id="login-section" style="margin-top: 20px; text-align: center;">
+      <p>or</p>
+      <a href="/auth/google" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+        <span>Continue with Google</span>
+      </a>
+    </div>
+
+    <!--If logged in user section-->
+    <div id="user-section" style="display: none; margin-top: 20px; text-align: center;">
+      <p>Welcome, <span id="account-name"></span>!</p>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <!--Link to signup panel-->
+    <p style="margin-top: 10px;">
+      Don't have an account?
+      <a href="#" onclick="closeLogin(); openSignup();">Sign up</a>
+    </p>
+  </div>
+
+  <!--A signup panel that let new users to make an account-->
+  <div id="signupOverlay" class="overlay"></div>
+
+  <div id="signupPanel" class="side-panel">
+    <button class="close-btn" onclick="closeSignup()">&larr;</button>
+
+    <h2>Create an Account</h2>
+
+    <!--Signup Form-->
+    <form id="signupForm">
+      <input type="text" id="signupName" placeholder="Full Name" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <p id="signupMessage"></p>
+
+    <!--A link that goes back to Login-->
+    <p id="signupPrompt" style="margin-top: 10px;">
+      Already have an account?
+      <a href="#" onclick="closeSignup(); openLogin();">Log in</a>
+    </p>
+  </div>
+
+  <!--JavaScript that are controlling the pet loading, modalsm and the login systems-->
+  <script src="js/pets.js"></script>
+  <script src="js/login.js"></script>
+
 </body>
 </html>

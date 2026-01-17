@@ -1,7 +1,6 @@
 {
   "name": "the_pet_spot",
   "version": "1.0.0",
-  "type": "module",
   "description": "The Pet Spot",
   "main": "index.js",
   "scripts": {
@@ -19,7 +18,16 @@
   },
   "homepage": "https://github.com/Rhad-14-python/The_Pet_Spot#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^6.21.0",
+    "mongoose": "^8.21.0",
+    "node-fetch": "^3.3.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
   }
 }

@@ -4,44 +4,55 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>The Pet Spot</title>
+  <!-- The one that style the home screen -->
   <link rel="stylesheet" href="/css/home.css"/>
+  <!-- This one help style the login or signup panel  -->
+  <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body data-pet="home">
+
   <header>
     <div class="logo">🐾 The Pet Spot</div>
     <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="login.html">Account</a>
+      <!-- Goes active when highlighted  -->
+      <a href="index.html" class="nav-link active">Home</a>
+      <!-- Link that goes to the shop tab-->
+      <a href="shop.html" class="nav-link">Shop</a>
+      <!--A button triggers if pressed a button panel shows to the right-->
+      <a href="#" class="nav-link" onclick="handleAccountClick()">Account</a>
     </nav>
   </header>
-
+<!--This is the main area that contains the hero section and the categories section-->
   <main class="container">
-    <h1 class="page-title">Find Your New Best Friend</h1>
-    <p class="lead">Choose a category below to explore adoptable pets.</p>
-
+    <div class="hero-container">
+      <h1 class="page-title">Find Your New Best Friend</h1>
+      <p class="lead">Choose a category below to explore adoptable pets.</p>
+    </div>
+<!--A grid for pets and each button is a link that goes to the adoption tab or section-->
     <div class="categories">
+      <!--For Dogs category-->
       <div class="category">
         <a href="dogs.html">
           <img src="/img/dog.png" alt="Dogs">
         </a>
         <p class="category-label">Dogs</p>
       </div>
-
+      <!--For Cats category-->
       <div class="category">
         <a href="cats.html">
           <img src="/img/cat.png" alt="Cats">
         </a>
         <p class="category-label">Cats</p>
       </div>
-
+      <!--For Birds category-->
       <div class="category">
         <a href="birds.html">
           <img src="/img/bird.png" alt="Birds">
         </a>
         <p class="category-label">Birds</p>
       </div>
-
+      <!--A categories for all Small animals-->
       <div class="category">
         <a href="smallpets.html">
           <img src="/img/smallpet.png" alt="Small Pets">
@@ -50,8 +61,71 @@
       </div>
     </div>
   </main>
+<!--Footer section-->
   <footer class="site-footer">
     <p>© 2025 The Pet Spot | Adopt, Don't Shop!</p>
   </footer>
+<!--This part is where the login panel and overlay shows that are hidden by default but shown when user click the Account button-->
+  <!--Darkened when clicked-->
+<div id="loginOverlay" class="overlay"></div>
+<!--A panel that lides in from the right-->
+  <div id="loginPanel" class="side-panel">
+    <!--Closes when pressed and returns to page-->
+    <button class="close-btn" onclick="closeLogin()">&larr;</button>
+
+    <h2>Welcome Back</h2>
+<!--Typical email and password login form-->
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+<!--Shows the loginn success or error messages-->
+    <p id="loginMessage"></p>
+<!--Google OAuth login option-->
+    <div id="login-section" style="margin-top: 20px; text-align: center;">
+      <p>or</p>
+        <a href="/auth/google" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+        <span>Continue with Google</span>
+      </a>
+    </div>
+<!--Section show when user is logged in-->
+    <div id="user-section" style="display: none; margin-top: 20px; text-align: center;">
+      <p>Welcome, <span id="account-name"></span>!</p>
+      <button onclick="logout()">Logout</button>
+    </div>
+<!--A link to open signup panel-->
+    <p id="signupPrompt" style="margin-top: 10px;">
+      Don't have an account?
+      <a href="#" onclick="closeLogin(); openSignup();">Sign up</a>
+    </p>
+  </div>
+<!--Panel and Signup Overlay that allows user to make an account-->
+  <div id="signupOverlay" class="overlay"></div>
+
+  <div id="signupPanel" class="side-panel">
+    <!--Close button-->
+    <button class="close-btn" onclick="closeSignup()">&larr;</button>
+
+    <h2>Create an Account</h2>
+<!--Shows for new users a signup form-->
+    <form id="signupForm">
+      <input type="text" id="signupName" placeholder="Full Name" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+<!--Shows an error message or success signup-->
+    <p id="signupMessage"></p>
+<!--A link that return to the login panel-->
+    <p style="margin-top: 10px;">
+      Already have an account?
+      <a href="#" onclick="closeSignup(); openLogin();">Log in</a>
+    </p>
+  </div>
+<!--A JavaScript handling login, signup, and a panel that toggles-->
+  <script src="js/login.js"></script>
+
 </body>
 </html>

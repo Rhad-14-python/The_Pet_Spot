@@ -109,7 +109,6 @@ h1{
   color:var(--muted)
 }
 
-
 .category span{margin-top:10px;font-weight:600}
 
 .pets-grid{
@@ -277,12 +276,13 @@ h1{
 }
 .adopt-panel{
   width:90%;
-  max-width:480px;
-  max-height:85vh;
+  max-width:650px;
+  max-height:87vh;
+  padding: 26px 0;
   background:#fff;
   display: flex;
   flex-direction: column;
-  border-radius:12px;
+  border-radius:16px;
   box-shadow:0 12px 36px rgba(0,0,0,.18);
   overflow-y:hidden;
   transform:translateX(100%);
@@ -293,9 +293,15 @@ h1{
 }
 .adopt-close{
   position:absolute;
-  top:10px;right:14px;
-  background:none;border:none;
-  font-size:20px;cursor:pointer;
+  top:18px;
+  right:20px;
+  background:none;
+  border:none;
+  font-size:26px;
+  cursor:pointer;
+}
+.adopt-close{
+  color:#e74c3c;
 }
 .adopt-inner{
   flex: 1;
@@ -311,35 +317,54 @@ h1{
 
 .adopt-left{
   flex:1;
-  padding:20px;
+  padding: 27px;
   background:#f4f4f4;
   border-radius:12px 0 0 12px;
 }
 .adopt-left img{
-  width:100%;height:140px;
-  object-fit:cover;border-radius:8px;
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:8px;
   margin-bottom:10px;
 }
 .adopt-left p{margin:4px 0;color:var(--muted)}
 .adopt-right{
   flex:1.8;
-  padding:20px;
+  padding:30px 30px, 40px, 30px;
+  gap: 17px;
 }
-.adopt-right label{display:block;margin-bottom:6px;font-weight:500}
+.adopt-right label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:500
+}
 .adopt-right input,
 .adopt-right select,
 .adopt-right textarea{
   width:100%;
-  padding:8px;
-  margin-bottom:12px;
+  padding:10px;
+  margin-bottom:18px;
   border-radius:6px;
   border:1px solid #ccc;
   font-family:inherit;
+  font-size: 1rem;
 }
-.checkbox-line{
-  display:flex;
-  align-items:center;
-  gap:8px;
+
+.checkbox-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #444;
+}
+
+.checkbox-line input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #e67e22;
+  cursor: pointer;
 }
 
 footer {
@@ -382,15 +407,33 @@ button{padding:8px 16px;
 @media(max-width:768px){
   .adopt-overlay{align-items:flex-end;background:rgba(0,0,0,.45)}
   .adopt-panel{
-    width:100%;height:100%;
+    padding:20px 0;
+    width:100%;
+    height:100%;
     border-radius:0;
     transform:translateY(100%);
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
+  .adopt-close {
+    font-size: 24px;
+    top: 14px;
+    right: 16px;
+  }
+
   .adopt-overlay.show .adopt-panel{transform:translateY(0)}
   .adopt-inner{flex-direction:column}
 }
 @media(max-width:600px){
   .pets-grid{grid-template-columns:1fr}
   .modal-left img{height:180px}
+}
+@media (max-width: 500px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 0;
+  }
+  .page-top{
+    padding-top: 40px;
+  }
 }
