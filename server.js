@@ -315,5 +315,5 @@ app.get("/users/me", (req, res) => {
 
 //Starting the server
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
