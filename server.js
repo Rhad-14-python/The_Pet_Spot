@@ -287,7 +287,10 @@ app.get("/api/pets/:type", async (req, res) => {
 //The Google Auth Routes
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
+  })
 );
 
 app.get(
