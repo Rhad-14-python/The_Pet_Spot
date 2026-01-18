@@ -1,25 +1,30 @@
-/* ============================
-   Google OAuth Passport Config
-   ============================ */
+//Loads all the passpots so we use the Google login
+const passport = require("passport");
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('./models/user');
+//Google OAuth strategy used for authentication
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
+//User model so we can save and find the users in the database
+const User = require("./server/User");
+
+//This set up the Google login strategy
 passport.use(
   new GoogleStrategy(
     {
+        //Google API credentials stored in environment variables
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL
+      
+      //Where Google redirects after loging in
+      callbackURL: "http://localhost:3000/auth/google/callback"
     },
+
+    //Runs after Google sends back user information
     async (accessToken, refreshToken, profile, done) => {
       try {
-        /* ============================
-           Find or create user
-           ============================ */
         let user = await User.findOne({ googleId: profile.id });
 
+        //Checks if the user is already exists in the database
         if (!user) {
           user = new User({
             googleId: profile.id,
@@ -29,27 +34,27 @@ passport.use(
           await user.save();
         }
 
+        //Finishes the login process
         return done(null, user);
-      } catch (err) {
-        return done(err, false);
+      } catch (error) {
+        //If something goes wrong, login fails
+        return done(error, false);
       }
     }
   )
 );
 
-/* ============================
-   Session Handling
-   ============================ */
-
+//Stores the user ID inside the session
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+//Retrieves full user data from stored ID
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
     done(null, user);
-  } catch (err) {
-    done(err, false);
+  } catch (error) {
+    done(error, false);
   }
 });

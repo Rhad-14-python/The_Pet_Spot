@@ -1,24 +1,33 @@
+//This imports mongoose so we can create a database schema
+const mongoose = require("mongoose");
 
-const mongoose = require('mongoose');
-
-const UserSchema = new mongoose.Schema({
+//Schema that stores all the user acount information
+const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
     unique: true,
     sparse: true
   },
-  name: {
-    type: String,
-    required: true
+  
+  //User's full name area
+  name: { 
+    type: String, 
+    required: true 
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
+
+  //User's email and must be unique
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
   },
-  password: {
-    type: String
+
+  //Password for normal email/password login
+  //Not required when using the Google Login
+  password: { 
+    type: String 
   }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+//Exports all the model so the server can make and find users
+module.exports = mongoose.model("User", userSchema);
