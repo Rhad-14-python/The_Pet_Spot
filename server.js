@@ -1,4 +1,4 @@
-// Message when the server is starting
+//Message when the server is starting
 console.log("SERVER STARTING...");
 
 require("dotenv").config();
@@ -7,61 +7,49 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const session = require("express-session");
-const passport = require("passport");
-
 const User = require("./server/User");
 const Adoption = require("./server/Adoption");
 const Order = require("./server/Order");
 
-require("./passport-config");
-
-const API_KEY = "0qz4VD72";
-const PORT = process.env.PORT || 3000;
-
 const app = express();
+const PORT = process.env.PORT || 3000;
+const session = require("express-session");
+const passport = require("passport");
+require("./passport-config");
+const API_KEY = "0qz4VD72";
 
-// Allow cross-origin requests and JSON handling
+//Allows cross-origin requests and JSON handling
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// Tell Express it is behind a proxy (needed for Render HTTPS)
-app.set("trust proxy", 1);
-
-// Session setup for login persistence
+//Session setup for login persistence
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "your_secret_key",
     resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,    // required for HTTPS
-      sameSite: "lax"  // required for Google OAuth redirects
-    }
+    saveUninitialized: false
   })
 );
 
-// Initialize Passport for Google login
+//The one that initiate the passport for the Google Login
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Logs every request
+//Logs every requests made to the server
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 
-// Connect to MongoDB Atlas
+//Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 console.log("USER MODEL LOADED");
 
-// ------------------ Routes ------------------
-
-// Orders
+//Saves the shop orders
 app.post("/api/order", async (req, res) => {
   const { items, total, userId, userName, userEmail } = req.body;
   try {
@@ -74,7 +62,7 @@ app.post("/api/order", async (req, res) => {
   }
 });
 
-// User registration
+//Registration for users
 app.post("/api/register", async (req, res) => {
   const { name, email, password } = req.body;
   const existing = await User.findOne({ email });
@@ -86,7 +74,7 @@ app.post("/api/register", async (req, res) => {
   res.json({ message: "User registered successfully" });
 });
 
-// User login
+//User login
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -95,11 +83,11 @@ app.post("/api/login", async (req, res) => {
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ message: "Invalid email or password" });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  const token = jwt.sign({ id: user._id }, "secret123", { expiresIn: "1d" });
   res.json({ message: "Login successful", token, name: user.name, email: user.email });
 });
 
-// Adoption form
+//Adoption form submission
 app.post("/api/adoption", async (req, res) => {
   try {
     const adoption = new Adoption({ ...req.body });
@@ -111,7 +99,7 @@ app.post("/api/adoption", async (req, res) => {
   }
 });
 
-// Fetch pets
+//Pet API handling
 const speciesMap = { dog: "Dog", cat: "Cat", bird: "Bird" };
 
 function formatPets(data) {
@@ -148,10 +136,7 @@ app.get("/api/pets/:type", async (req, res) => {
   const type = req.params.type.toLowerCase();
   const url = "https://api.rescuegroups.org/v5/public/animals/search/available";
 
-  const smallSpecies = [
-    "Rabbit","Guinea Pig","Ferret","Hamster","Gerbil","Chinchilla",
-    "Hedgehog","Sugar Glider","Rat","Mouse"
-  ];
+  const smallSpecies = ["Rabbit","Guinea Pig","Ferret","Hamster","Gerbil","Chinchilla","Hedgehog","Sugar Glider","Rat","Mouse"];
 
   try {
     if (type === "small") {
@@ -186,12 +171,9 @@ app.get("/api/pets/:type", async (req, res) => {
   }
 });
 
-// ------------------ Google OAuth ------------------
+//Google Auth routes
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"], callbackURL: process.env.GOOGLE_CALLBACK_URL }));
 
-// Start Google login
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-// Google callback
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login.html" }), (req, res) => {
   res.redirect("/");
 });
@@ -207,5 +189,5 @@ app.get("/users/me", (req, res) => {
   res.json(null);
 });
 
-// ------------------ Start server ------------------
+//Starting the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
