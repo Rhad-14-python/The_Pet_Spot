@@ -1,4 +1,4 @@
-//Message when the server is starting
+// Message when the server is starting
 console.log("SERVER STARTING...");
 
 require("dotenv").config();
@@ -7,67 +7,65 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
+
 const User = require("./server/User");
 const Adoption = require("./server/Adoption");
 const Order = require("./server/Order");
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const session = require("express-session");
-const passport = require("passport");
 require("./passport-config");
-const API_KEY = "0qz4VD72";
 
-//Allows a cross-origin requests and JSON handling
+const API_KEY = "0qz4VD72";
+const PORT = process.env.PORT || 3000;
+
+const app = express();
+
+// Allow cross-origin requests and JSON handling
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
+// Tell Express it is behind a proxy (needed for Render HTTPS)
 app.set("trust proxy", 1);
 
-//Session setup for login persistance
+// Session setup for login persistence
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
-      sameSite: "lax"
+      secure: true,    // required for HTTPS
+      sameSite: "lax"  // required for Google OAuth redirects
     }
   })
 );
 
-//The one that initiate the passport for the Google Login
+// Initialize Passport for Google login
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Logs every requests made to the server
+// Logs every request
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 
-//This connects all of this to the MongoDB Atlas
+// Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 console.log("USER MODEL LOADED");
 
-//Saves the shop orders
+// ------------------ Routes ------------------
+
+// Orders
 app.post("/api/order", async (req, res) => {
   const { items, total, userId, userName, userEmail } = req.body;
-
   try {
-    const order = new Order({
-      items,
-      total,
-      userId,
-      userName,
-      userEmail
-    });
-
+    const order = new Order({ items, total, userId, userName, userEmail });
     await order.save();
     res.json({ message: "Order saved successfully" });
   } catch (error) {
@@ -76,71 +74,35 @@ app.post("/api/order", async (req, res) => {
   }
 });
 
-//Registration for users
+// User registration
 app.post("/api/register", async (req, res) => {
   const { name, email, password } = req.body;
-//This one checks if an email already exists
   const existing = await User.findOne({ email });
-  if (existing) {
-    return res.status(400).json({ message: "Email already exists" });
-  }
-//Hashed the password before it even save
+  if (existing) return res.status(400).json({ message: "Email already exists" });
+
   const hashed = await bcrypt.hash(password, 10);
-
-  const user = new User({
-    name,
-    email,
-    password: hashed
-  });
-
+  const user = new User({ name, email, password: hashed });
   await user.save();
   res.json({ message: "User registered successfully" });
 });
 
-//User Login
+// User login
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
-//Checks if the user already exists
   const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ message: "Invalid email or password" });
-  }
-//Checks if the password matches 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-    return res.status(400).json({ message: "Invalid email or password" });
-  }
-//Creates a login token
-  const token = jwt.sign({ id: user._id }, "secret123", { expiresIn: "1d" });
+  if (!user) return res.status(400).json({ message: "Invalid email or password" });
 
-  res.json({
-    message: "Login successful",
-    token,
-    name: user.name,
-    email: user.email
-  });
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(400).json({ message: "Invalid email or password" });
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  res.json({ message: "Login successful", token, name: user.name, email: user.email });
 });
-//The Adoption form submission part
+
+// Adoption form
 app.post("/api/adoption", async (req, res) => {
   try {
-    const adoption = new Adoption({
-      name: req.body.name,
-      pet: req.body.pet,
-      reason: req.body.reason,
-      email: req.body.email,
-      phone: req.body.phone,
-      address: req.body.address,
-      ownRent: req.body.ownRent,
-      otherPets: req.body.otherPets,
-      ownedBefore: req.body.ownedBefore,
-      petLocation: req.body.petLocation,
-      why: req.body.why,
-      agree: req.body.agree,
-      userId: req.body.userId,
-      userName: req.body.userName,
-      userEmail: req.body.userEmail
-    });
-
+    const adoption = new Adoption({ ...req.body });
     await adoption.save();
     res.json({ message: "Adoption form submitted successfully" });
   } catch (error) {
@@ -149,43 +111,23 @@ app.post("/api/adoption", async (req, res) => {
   }
 });
 
-//The Pet API Handling for Dog, Cat, and Bird
-const speciesMap = {
-  dog: "Dog",
-  cat: "Cat",
-  bird: "Bird"
-};
-//Formats the API data into a clean objects for frontend
+// Fetch pets
+const speciesMap = { dog: "Dog", cat: "Cat", bird: "Bird" };
+
 function formatPets(data) {
   const pictures = {};
   if (Array.isArray(data.included)) {
     data.included.forEach(item => {
-      if (item.type === "pictures" && item.id) {
-        pictures[item.id] = item.attributes;
-      }
+      if (item.type === "pictures" && item.id) pictures[item.id] = item.attributes;
     });
   }
 
   return (data.data || []).map(p => {
     let img = "/img/default.jpg";
-//Checks if the pet has img
-    if (
-      p.relationships &&
-      p.relationships.pictures &&
-      Array.isArray(p.relationships.pictures.data) &&
-      p.relationships.pictures.data.length > 0
-    ) {
-      const picRef = p.relationships.pictures.data[0];
-      const pic = pictures[picRef.id];
-
-      if (pic) {
-        img =
-          (pic.large && pic.large.url) ||
-          (pic.original && pic.original.url) ||
-          (pic.small && pic.small.url) ||
-          "/img/default.jpg";
-      }
-    } else if (p.attributes && p.attributes.pictureThumbnailUrl) {
+    if (p.relationships?.pictures?.data?.length > 0) {
+      const pic = pictures[p.relationships.pictures.data[0].id];
+      if (pic) img = pic.large?.url || pic.original?.url || pic.small?.url || "/img/default.jpg";
+    } else if (p.attributes?.pictureThumbnailUrl) {
       img = p.attributes.pictureThumbnailUrl;
     }
 
@@ -202,126 +144,68 @@ function formatPets(data) {
   });
 }
 
-//Fetch all the Pets from the RescueGroup API
 app.get("/api/pets/:type", async (req, res) => {
   const type = req.params.type.toLowerCase();
   const url = "https://api.rescuegroups.org/v5/public/animals/search/available";
-//Due to having no name for small animal I made it like this
-  if (type === "small") {
-    const smallSpecies = [
-      "Rabbit",
-      "Guinea Pig",
-      "Ferret",
-      "Hamster",
-      "Gerbil",
-      "Chinchilla",
-      "Hedgehog",
-      "Sugar Glider",
-      "Rat",
-      "Mouse"
-    ];
 
-    let allPets = [];
+  const smallSpecies = [
+    "Rabbit","Guinea Pig","Ferret","Hamster","Gerbil","Chinchilla",
+    "Hedgehog","Sugar Glider","Rat","Mouse"
+  ];
 
-    for (const species of smallSpecies) {
-      try {
+  try {
+    if (type === "small") {
+      let allPets = [];
+      for (const species of smallSpecies) {
         const response = await fetch(url, {
           method: "POST",
-          headers: {
-            "Authorization": API_KEY,
-            "Content-Type": "application/vnd.api+json"
-          },
-          body: JSON.stringify({
-            data: {
-              filters: [
-                { fieldName: "species.singular", operation: "equals", criteria: species }
-              ],
-              limit: 20
-            },
-            include: ["pictures", "breeds"]
-          })
+          headers: { "Authorization": API_KEY, "Content-Type": "application/vnd.api+json" },
+          body: JSON.stringify({ data: { filters: [{ fieldName: "species.singular", operation: "equals", criteria: species }], limit: 20 }, include: ["pictures", "breeds"] })
         });
-
         if (response.ok) {
           const data = await response.json();
           allPets = allPets.concat(formatPets(data));
         }
-      } catch (err) {
-        console.error(`Error fetching ${species}:`, err);
       }
+      return res.json(allPets);
     }
 
-    return res.json(allPets);
-  }
-
-  //Normal pets like dogs, cats, and birds
-  const species = speciesMap[type] || "Dog";
-
-  try {
+    const species = speciesMap[type] || "Dog";
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Authorization": API_KEY,
-        "Content-Type": "application/vnd.api+json"
-      },
-      body: JSON.stringify({
-        data: {
-          filters: [
-            { fieldName: "species.singular", operation: "equals", criteria: species }
-          ],
-          limit: 20
-        },
-        include: ["pictures", "breeds"]
-      })
+      headers: { "Authorization": API_KEY, "Content-Type": "application/vnd.api+json" },
+      body: JSON.stringify({ data: { filters: [{ fieldName: "species.singular", operation: "equals", criteria: species }], limit: 20 }, include: ["pictures", "breeds"] })
     });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("API error:", errText);
-      return res.json([]);
-    }
-
+    if (!response.ok) return res.json([]);
     const data = await response.json();
-    const petsArray = formatPets(data);
+    res.json(formatPets(data));
 
-    res.json(petsArray);
   } catch (err) {
     console.error("Server error:", err);
     res.json([]);
   }
 });
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"]
-  })
-);
+// ------------------ Google OAuth ------------------
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login.html" }),
-  (req, res) => {
-    res.redirect("/");
-  }
-);
+// Start Google login
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
-// Logout Route
-app.get("/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/");
-  });
+// Google callback
+app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/login.html" }), (req, res) => {
+  res.redirect("/");
 });
 
-//Checks if the user is logged in
+// Logout
+app.get("/logout", (req, res) => {
+  req.logout(() => { res.redirect("/"); });
+});
+
+// Get current user
 app.get("/users/me", (req, res) => {
-  if (req.user) {
-    return res.json(req.user);
-  }
+  if (req.user) return res.json(req.user);
   res.json(null);
 });
 
-//Starting the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// ------------------ Start server ------------------
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
