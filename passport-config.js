@@ -16,7 +16,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       
       //Where Google redirects after loging in
-      callbackURL: "process.env.GOOGLE_CALLBACK_URL"
+      callbackURL: process.env.GOOGLE_CALLBACK_URL
     },
 
     //Runs after Google sends back user information
